@@ -1,0 +1,49 @@
+---
+title: "HDAT9600 TBLA1"
+author: "cpu"
+date: "10 June 2019"
+output: html_document
+---
+
+````{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(dplyr)
+library(tidyselect)
+library(ggplot2)
+library(hexbin)
+library(readr)
+library(knitr)
+library(rmarkdown)
+hr <- read_csv("HeartRate.csv")
+summary(hr)
+```
+Exercise Data
+```{r}
+hr %>%
+count(exer)
+exer_bar <- ggplot(data=hr)+geom_bar(mapping=aes(x=exer))
+exer_bar + labs(title="Distribution of Exercise")
+
+```
+BMI Category
+
+```{r}
+hr2 <- hr %>%
+mutate(bmi_category=case_when(bmi>=0 & bmi <=18.4999 ~ "Underweight",bmi>=18.5 & bmi<=24.999 ~ "Normal weight", bmi>=25 & bmi<=29.999 ~ "Overweight", bmi >= 30 ~ "Obese"))
+hr2
+```
+High Cholesterol
+
+```{r}
+high_choles2 <- hr2 %>%
+filter(choles>6.5)
+high_choles2
+```
+High Cholesterol and BMI Category
+
+```{r}
+High_choles_bmi2 <- ggplot(data = high_choles2, mapping = aes(x = choles, colour = bmi_category)) + geom_freqpoly(binwidth = 0.1)
+High_choles_bmi2 + labs(title="High Cholesterol and BMI")
+```

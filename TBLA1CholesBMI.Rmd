@@ -47,3 +47,5 @@ High Cholesterol and BMI Category
 High_choles_bmi2 <- ggplot(data = high_choles2, mapping = aes(x = choles, colour = bmi_category)) + geom_freqpoly(binwidth = 0.1)
 High_choles_bmi2 + labs(title="High Cholesterol and BMI")
 ```
+
+Adding summary
